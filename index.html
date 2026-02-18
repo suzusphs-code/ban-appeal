@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Wrath Of Curses | Bug Report</title>
+  <title>Wrath Of Curses | Ban Appeal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
@@ -120,13 +120,13 @@
 <body>
 
   <div class="card">
-    <h1>🐞 Bug Report</h1>
-    <p>Help us improve the game. Screenshots encouraged.</p>
+    <h1>Ban Appeal</h1>
+    <p>Submit Your Ban Appeal.</p>
 
-    <label>Discord Username</label>
-    <input id="user" placeholder="username#0000">
+    <label>Discord ID</label>
+    <input id="user" placeholder="1234556678">
 
-    <label>Bug Description</label>
+    <label>Reason for being banned</label>
     <textarea id="bug" placeholder="Explain the bug in detail..."></textarea>
 
     <label>Screenshots (optional)</label>
@@ -134,12 +134,12 @@
 
     <div class="preview" id="preview"></div>
 
-    <button id="send">Send Report</button>
+    <button id="send">Submit Appeal</button>
     <div class="status" id="status"></div>
   </div>
 
 <script>
-const WEBHOOK_URL = "https://discord.com/api/webhooks/1466113946065965126/TmDaoYGqfILvEkUEigKr4JbI-LlpBLxl5Jm5kwmfaLAJ9VQzYjPbWASMzL4xcVJqBHvZ";
+const WEBHOOK_URL = "https://discord.com/api/webhooks/1473692492565057728/Ysmvmg38SJQSUIY85dfPrUgDKvMJF-iMCP1K0b9tbzFtHTsjYbi_4SIfiuNafbdZt-h2";
 
 const sendBtn = document.getElementById("send");
 const statusText = document.getElementById("status");
@@ -171,7 +171,7 @@ sendBtn.onclick = async () => {
   const bug = document.getElementById("bug").value;
 
   if (!bug) {
-    statusText.textContent = "❌ Bug description required.";
+    statusText.textContent = "❌ Ban Appeal Reason Required.";
     return;
   }
 
@@ -182,7 +182,7 @@ sendBtn.onclick = async () => {
 
   // Embed
   const embed = {
-    title: "🐛 New Bug Report",
+    title: "🐛 New Ban Appeal",
     description: `**User:** ${user}\n\n${bug}`,
     color: 0x7c8cff,
     timestamp: new Date().toISOString()
@@ -203,14 +203,14 @@ sendBtn.onclick = async () => {
 
     if (!res.ok) throw new Error();
 
-    statusText.textContent = "✅ Bug report sent!";
+    statusText.textContent = "✅ Appeal Submitted";
     localStorage.setItem("lastSent", Date.now());
     document.getElementById("bug").value = "";
     preview.innerHTML = "";
     imageInput.value = "";
 
   } catch {
-    statusText.textContent = "❌ Failed to send report.";
+    statusText.textContent = "❌ Failed to send appeal.";
   }
 
   sendBtn.disabled = false;
