@@ -146,6 +146,20 @@ const statusText = document.getElementById("status");
 const imageInput = document.getElementById("images");
 const preview = document.getElementById("preview");
 
+// ---- Auto-fill from URL params (?user=...&guild=...&inf=...)
+const params = new URLSearchParams(window.location.search);
+const userIdFromUrl = params.get("user");
+const guildId = params.get("guild");
+const infractionId = params.get("inf");
+
+if (userIdFromUrl) {
+  const userInput = document.getElementById("user");
+  userInput.value = userIdFromUrl;
+  userInput.readOnly = true;  // prevent tampering
+  userInput.style.opacity = "0.6";
+  userInput.style.cursor = "not-allowed";
+}
+
 // ---- Anti-spam (30s cooldown)
 let lastSent = localStorage.getItem("lastSent") || 0;
 const COOLDOWN = 30000;
@@ -180,16 +194,14 @@ sendBtn.onclick = async () => {
 
   const formData = new FormData();
 
-  // Embed
   const embed = {
-    title: "🐛 New Ban Appeal",
-    description: `**User:** ${user}\n\n${bug}`,
+    title: "📋 New Ban Appeal",
+    description: `**User ID:** ${user}\n**Guild ID:** ${guildId || "Unknown"}\n**Infraction ID:** \`${infractionId || "Unknown"}\`\n\n**Appeal:**\n${bug}`,
     color: 0x7c8cff,
     timestamp: new Date().toISOString()
   };
   formData.append("payload_json", JSON.stringify({ embeds: [embed] }));
 
-  // Attach images
   const files = [...imageInput.files];
   files.forEach((file, index) => {
     formData.append(`file${index}`, file, file.name);
@@ -215,6 +227,5 @@ sendBtn.onclick = async () => {
 
   sendBtn.disabled = false;
 };
-</script>
-</body>
+</script></body>
 </html>
